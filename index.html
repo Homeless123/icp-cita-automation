@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Comparador de tarifas eléctricas gratuito y abierto. Calcula tu coste anual, compara tarifas y toma decisiones con datos. España y extensible a otros países.">
+  <title>LuzLibre — Comparador Eléctrico Abierto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js" defer></script>
+  <script src="assets/app.js" defer></script>
+</head>
+<body>
+  <div class="bg-orb orb-a"></div>
+  <div class="bg-orb orb-b"></div>
+  <div class="bg-grid"></div>
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="32" height="32" fill="none"><rect width="32" height="32" rx="10" fill="url(#g1)"/><path d="M18.5 6L10 17.5h5.5L13.5 26 22 14.5h-5.5L18.5 6z" fill="#fff" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/><defs><linearGradient id="g1" x1="4" y1="4" x2="28" y2="28"><stop stop-color="#16A34A"/><stop offset="1" stop-color="#0EA5A4"/></linearGradient></defs></svg>
+      </div>
+      <div>
+        <div class="brand-name">LuzLibre</div>
+        <div class="brand-tag" data-i18n="brand.tag">Comparador eléctrico abierto · gratuito · sin teléfonos</div>
+      </div>
+    </div>
+    <div class="topbar-actions">
+      <div class="lang-switch" role="group" aria-label="Language">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a class="ghost-btn" href="#email-desk" data-i18n="nav.email">Email</a>
+      <a class="ghost-btn" href="https://github.com/Homeless123/ahmet" target="_blank" rel="noopener" data-i18n="nav.github">GitHub</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero container">
+      <div class="hero-copy">
+        <p class="eyebrow" data-i18n="hero.eyebrow">Herramienta pública para decidir con calma</p>
+        <h1 data-i18n="hero.title">Compara tu factura eléctrica.<br><span class="accent">Sin trampas. Sin llamadas.</span></h1>
+        <p class="hero-lead" data-i18n="hero.lead">Introduce tu consumo, calcula el coste anual real con impuestos, compara tarifas y genera un informe claro. Diseñado desde un mapa real de investigación en España, extensible a otros países.</p>
+        <div class="hero-cta">
+          <a class="primary-btn" href="#profile" data-i18n="hero.cta">Empezar comparación</a>
+          <a class="secondary-btn" href="#creative-lab" data-i18n="hero.cta2">Abrir modo creativo</a>
+        </div>
+        <div class="trust-row">
+          <div class="trust-pill"><span class="dot green"></span><span data-i18n="trust.free">Gratis y open-source</span></div>
+          <div class="trust-pill"><span class="dot teal"></span><span data-i18n="trust.email">Solo email, nunca teléfono</span></div>
+          <div class="trust-pill"><span class="dot amber"></span><span data-i18n="trust.verify">Verifica antes de contratar</span></div>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="panel-card glass">
+          <div class="panel-head">
+            <span class="panel-kicker" data-i18n="panel.kicker">Resumen rápido</span>
+            <span class="badge-live" data-i18n="panel.badge">Cálculo local</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat">
+              <div class="stat-label" data-i18n="panel.stat1l">Tu coste anual</div>
+              <div class="stat-value" id="hero-current">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label" data-i18n="panel.stat2l">Mejor opción</div>
+              <div class="stat-value" id="hero-best">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label" data-i18n="panel.stat3l">Ahorro estimado</div>
+              <div class="stat-value saving" id="hero-saving">—</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label" data-i18n="panel.stat4l">Tarifas comparadas</div>
+              <div class="stat-value" id="hero-count">—</div>
+            </div>
+          </div>
+          <div class="panel-foot" id="hero-verdict" data-i18n="panel.foot">Rellena tu perfil para ver la recomendación.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="profile">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" data-i18n="profile.eyebrow">Paso 1</p>
+          <h2 data-i18n="profile.title">Tu perfil de consumo</h2>
+          <p class="section-lead" data-i18n="profile.lead">Los datos se quedan en tu navegador. No se envían a ningún servidor.</p>
+        </div>
+        <div class="country-select-wrap">
+          <label for="countrySelect" class="field-label" data-i18n="profile.country">País / mercado</label>
+          <select id="countrySelect" class="field"></select>
+        </div>
+      </div>
+
+      <div class="card-grid two">
+        <div class="card">
+          <h3 data-i18n="profile.inputs">Datos básicos</h3>
+          <div class="form-grid">
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.cups">CUPS (opcional)</span>
+              <input id="cups" class="field" placeholder="ES0021..." autocomplete="off" spellcheck="false">
+              <span class="field-hint" data-i18n="f.cupsHint">Se usa solo para tus borradores de email. No se guarda fuera del navegador.</span>
+            </label>
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.currentCost">Coste actual anual € (opcional)</span>
+              <input id="currentCost" class="field" type="number" min="0" step="1" placeholder="1200">
+            </label>
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.p1kw">Potencia P1 (kW)</span>
+              <input id="p1kw" class="field" type="number" min="0" step="0.1" value="3.45">
+            </label>
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.p2kw">Potencia P2 (kW)</span>
+              <input id="p2kw" class="field" type="number" min="0" step="0.1" value="3.45">
+            </label>
+          </div>
+
+          <div class="divider"></div>
+          <h3 data-i18n="profile.consumption">Consumo</h3>
+          <div class="mode-tabs" role="tablist">
+            <button class="mode-tab active" data-mode="annual" role="tab" data-i18n="f.modeAnnual">Anual (kWh)</button>
+            <button class="mode-tab" data-mode="bill3" role="tab" data-i18n="f.modeBill">Factura 3 meses</button>
+          </div>
+
+          <div id="mode-annual" class="mode-panel">
+            <div class="form-grid">
+              <label class="field-wrap full">
+                <span class="field-label" data-i18n="f.annualKwh">Consumo anual total (kWh)</span>
+                <input id="annualKwh" class="field" type="number" min="0" step="1" value="3500">
+              </label>
+              <label class="field-wrap">
+                <span class="field-label" data-i18n="f.p1kwh">P1 punta (kWh/año)</span>
+                <input id="p1kwh" class="field" type="number" min="0" step="1" placeholder="840">
+              </label>
+              <label class="field-wrap">
+                <span class="field-label" data-i18n="f.p2kwh">P2 llano (kWh/año)</span>
+                <input id="p2kwh" class="field" type="number" min="0" step="1" placeholder="840">
+              </label>
+              <label class="field-wrap full">
+                <span class="field-label" data-i18n="f.p3kwh">P3 valle (kWh/año)</span>
+                <input id="p3kwh" class="field" type="number" min="0" step="1" placeholder="1820">
+                <span class="field-hint" data-i18n="f.splitHint">Si dejas P1/P2/P3 vacío, se usa el reparto por defecto del país (España 2.0TD: 24/24/52).</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="mode-bill3" class="mode-panel hidden">
+            <div class="form-grid">
+              <label class="field-wrap">
+                <span class="field-label" data-i18n="f.billAmount">Importe factura 3 meses (€)</span>
+                <input id="billAmount" class="field" type="number" min="0" step="1" placeholder="320">
+              </label>
+              <label class="field-wrap">
+                <span class="field-label" data-i18n="f.billKwh">kWh factura 3 meses</span>
+                <input id="billKwh" class="field" type="number" min="0" step="1" placeholder="900">
+              </label>
+            </div>
+            <div class="info-box" data-i18n="f.billWarn">La anualización ×4 es aproximada. Si tienes consumo anual real o reparto P1/P2/P3, úsalo para mayor precisión.</div>
+          </div>
+
+          <div class="divider"></div>
+          <div class="form-grid">
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.vat">IVA (%)</span>
+              <input id="vat" class="field" type="number" min="0" step="0.01" value="21">
+            </label>
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.iee">Impuesto eléctrico (%)</span>
+              <input id="iee" class="field" type="number" min="0" step="0.0001" value="5.1127">
+            </label>
+            <label class="field-wrap">
+              <span class="field-label" data-i18n="f.meter">Alquiler contador (€/día)</span>
+              <input id="meter" class="field" type="number" min="0" step="0.0001" value="0.02663">
+            </label>
+            <label class="field-wrap check-wrap">
+              <input id="bonoSocial" type="checkbox">
+              <span data-i18n="f.bono">Tengo bono social (filtra ofertas incompatibles)</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button class="primary-btn" id="calcBtn" data-i18n="f.calc">Calcular y comparar</button>
+            <button class="secondary-btn" id="resetBtn" data-i18n="f.reset">Restablecer</button>
+          </div>
+          <p class="micro" data-i18n="f.privacy">Privacidad: cálculo 100% local en tu navegador. CUPS y datos no salen de tu dispositivo.</p>
+        </div>
+
+        <div class="card">
+          <div class="card-head-row">
+            <h3 data-i18n="profile.tariffs">Tarifas del mercado</h3>
+            <div class="inline-actions">
+              <label class="file-btn">
+                <input type="file" id="importJson" accept="application/json" hidden>
+                <span data-i18n="f.import">Importar JSON</span>
+              </label>
+              <button class="ghost-btn small" id="exportDataBtn" data-i18n="f.exportData">Exportar dataset</button>
+            </div>
+          </div>
+          <p class="section-lead small" data-i18n="profile.tariffsLead">Dataset de referencia comunitario. Puedes editar, añadir o importar tarifas. Cada tarifa debe tener fuente y fecha.</p>
+          <div class="table-wrap">
+            <table class="data-table" id="tariffTable">
+              <thead>
+                <tr>
+                  <th data-i18n="t.company">Compañía</th>
+                  <th data-i18n="t.tariff">Tarifa</th>
+                  <th data-i18n="t.type">Tipo</th>
+                  <th data-i18n="t.source">Fuente</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="tariffTableBody"></tbody>
+            </table>
+          </div>
+          <details class="add-box">
+            <summary data-i18n="t.add">+ Añadir tarifa manualmente</summary>
+            <div class="form-grid compact">
+              <input id="addCompany" class="field" placeholder="Compañía / Company">
+              <input id="addName" class="field" placeholder="Nombre tarifa / Tariff name">
+              <select id="addType" class="field">
+                <option value="fijo">Fijo</option>
+                <option value="dh3">DH3 / 3 periodos</option>
+                <option value="indexada">Indexada</option>
+                <option value="trimestral">Trimestral</option>
+              </select>
+              <input id="addP1" class="field" type="number" step="0.0001" placeholder="Energía P1 €/kWh">
+              <input id="addP2" class="field" type="number" step="0.0001" placeholder="Energía P2 €/kWh">
+              <input id="addP3" class="field" type="number" step="0.0001" placeholder="Energía P3 €/kWh">
+              <input id="addPP1" class="field" type="number" step="0.0001" placeholder="Potencia P1 €/kW·día">
+              <input id="addPP2" class="field" type="number" step="0.0001" placeholder="Potencia P2 €/kW·día">
+              <input id="addSource" class="field full" placeholder="URL fuente / Source URL">
+              <input id="addEmail" class="field" placeholder="Email (opcional)">
+              <label class="check-wrap"><input id="addSva" type="checkbox"><span>SVA / bundle</span></label>
+            </div>
+            <div class="actions"><button class="secondary-btn" id="addTariffBtn" data-i18n="t.addBtn">Añadir</button></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="results">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" data-i18n="r.eyebrow">Paso 2</p>
+          <h2 data-i18n="r.title">Resultados y recomendación</h2>
+          <p class="section-lead" data-i18n="r.lead">Coste anual estimado con impuestos. Cada fila muestra la matemática y la fuente. No es asesoramiento financiero ni una oferta vinculante.</p>
+        </div>
+        <div class="inline-actions">
+          <button class="secondary-btn" id="printBtn" data-i18n="r.print">Imprimir / Guardar PDF</button>
+        </div>
+      </div>
+
+      <div class="card-grid two">
+        <div class="card">
+          <h3 data-i18n="r.ranking">Ranking anual (con impuestos)</h3>
+          <div class="chart-box"><canvas id="rankingChart" height="260"></canvas></div>
+        </div>
+        <div class="card">
+          <h3 data-i18n="r.split">Reparto de consumo</h3>
+          <div class="chart-box"><canvas id="splitChart" height="260"></canvas></div>
+          <div class="legend-note" id="splitNote"></div>
+        </div>
+      </div>
+
+      <div class="card verdict-card" id="verdictCard">
+        <div class="verdict-main">
+          <div class="verdict-icon" id="verdictIcon">⚡</div>
+          <div>
+            <div class="verdict-title" id="verdictTitle" data-i18n="r.verdictPending">Pendiente de cálculo</div>
+            <div class="verdict-body" id="verdictBody" data-i18n="r.verdictPendingBody">Introduce tu perfil y pulsa "Calcular y comparar".</div>
+          </div>
+        </div>
+        <div class="checklist" id="checklist">
+          <div class="check-item"><span class="check-num">1</span><span data-i18n="r.c1">Pide la oferta por escrito (email) antes de cambiar.</span></div>
+          <div class="check-item"><span class="check-num">2</span><span data-i18n="r.c2">Pregunta a tu comercializadora actual si iguala la oferta (retención / baja y volver).</span></div>
+          <div class="check-item"><span class="check-num">3</span><span data-i18n="r.c3">No canceles antes de confirmar el nuevo contrato. El cambio en España es seamless.</span></div>
+          <div class="check-item"><span class="check-num">4</span><span data-i18n="r.c4">Tienes 14 días de desistimiento en contratos a distancia.</span></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 data-i18n="r.detail">Detalle por tarifa</h3>
+        <div class="table-wrap">
+          <table class="data-table results-table" id="resultsTable">
+            <thead>
+              <tr>
+                <th data-i18n="r.colRank">#</th>
+                <th data-i18n="r.colTariff">Tarifa</th>
+                <th data-i18n="r.colAnnual">€/año</th>
+                <th data-i18n="r.colMonth">€/mes</th>
+                <th data-i18n="r.colDiff">vs actual</th>
+                <th data-i18n="r.colFlags">Señales</th>
+                <th data-i18n="r.colSource">Fuente</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody">
+              <tr><td colspan="7" class="empty-row" data-i18n="r.empty">Sin resultados todavía.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="container section" id="creative-lab">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" data-i18n="c.eyebrow">Modo creativo</p>
+          <h2 data-i18n="c.title">Laboratorio de escenarios</h2>
+          <p class="section-lead" data-i18n="c.lead">Juega con variables reales: cambia el consumo, simula autoconsumo solar, ajusta impuestos o crea tu propio país/mercado. Todo recalcula al instante.</p>
+        </div>
+        <span class="badge-live creative-badge" data-i18n="c.badge">What-if en vivo</span>
+      </div>
+
+      <div class="card-grid three">
+        <div class="card">
+          <h3 data-i18n="c.scenario">Escenario rápido</h3>
+          <label class="field-wrap">
+            <div class="label-row"><span class="field-label" data-i18n="c.consumptionDelta">Cambio de consumo</span><span class="value-pill" id="consDeltaVal">0%</span></div>
+            <input id="consDelta" type="range" min="-40" max="40" step="1" value="0" class="range">
+          </label>
+          <label class="field-wrap">
+            <div class="label-row"><span class="field-label" data-i18n="c.solar">Autoconsumo solar (offset)</span><span class="value-pill" id="solarVal">0%</span></div>
+            <input id="solar" type="range" min="0" max="80" step="1" value="0" class="range">
+          </label>
+          <label class="field-wrap">
+            <div class="label-row"><span class="field-label" data-i18n="c.pool">Escenario pool indexada</span><span class="value-pill" id="poolVal">100 €/MWh</span></div>
+            <input id="pool" type="range" min="30" max="180" step="1" value="100" class="range">
+            <span class="field-hint" data-i18n="c.poolHint">Afecta a tarifas indexadas/trimestrales: muestra rango bajo/medio/estrés.</span>
+          </label>
+          <label class="field-wrap">
+            <div class="label-row"><span class="field-label" data-i18n="c.powerOpt">Optimización potencia</span><span class="value-pill" id="powerOptVal">0 kW</span></div>
+            <input id="powerOpt" type="range" min="-2" max="2" step="0.1" value="0" class="range">
+            <span class="field-hint" data-i18n="c.powerHint">Simula bajar/subir P1 y P2 para ver impacto en término fijo.</span>
+          </label>
+          <button class="secondary-btn full-width" id="applyScenarioBtn" data-i18n="c.apply">Aplicar escenario</button>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="c.customCountry">País / mercado personalizado</h3>
+          <p class="section-lead small" data-i18n="c.customLead">Extiende el comparador a cualquier país. Define impuestos, moneda y periodos. Guarda el JSON y compártelo en el repo.</p>
+          <div class="form-grid compact">
+            <label class="field-wrap"><span class="field-label" data-i18n="c.ccode">Código</span><input id="custCode" class="field" value="XX" maxlength="4"></label>
+            <label class="field-wrap"><span class="field-label" data-i18n="c.ccur">Moneda</span><input id="custCur" class="field" value="EUR" maxlength="5"></label>
+            <label class="field-wrap"><span class="field-label">IVA %</span><input id="custVat" class="field" type="number" step="0.01" value="20"></label>
+            <label class="field-wrap"><span class="field-label" data-i18n="c.ctax">Imp. eléctrico %</span><input id="custTax" class="field" type="number" step="0.01" value="0"></label>
+            <label class="field-wrap full"><span class="field-label" data-i18n="c.cperiods">Periodos energía (coma)</span><input id="custPeriods" class="field" value="P1,P2"></label>
+          </div>
+          <div class="actions">
+            <button class="secondary-btn" id="applyCustomCountryBtn" data-i18n="c.capply">Usar mercado personalizado</button>
+          </div>
+          <div class="info-box" id="customCountryNote" data-i18n="c.cnote">Consejo: para publicar un país nuevo, añade <code>data/tariffs.xx.json</code> y un objeto en <code>data/countries.json</code>.</div>
+        </div>
+
+        <div class="card">
+          <h3 data-i18n="c.insights">Insights creativos</h3>
+          <div class="insight-list" id="insightList">
+            <div class="insight"><span class="insight-dot"></span><span data-i18n="c.i1">Simula bajar 0,5 kW de potencia: a veces ahorras más que cambiando de tarifa.</span></div>
+            <div class="insight"><span class="insight-dot"></span><span data-i18n="c.i2">Las indexadas pueden salir bien con pool bajo, pero nunca las compares con un solo número.</span></div>
+            <div class="insight"><span class="insight-dot"></span><span data-i18n="c.i3">Si el ahorro es menor de 100 €/año, prueba "baja y volver" con tu compañía actual.</span></div>
+          </div>
+          <div class="divider"></div>
+          <h4 class="mini-title" data-i18n="c.exportTitle">Compartir resultado</h4>
+          <p class="section-lead small" data-i18n="c.exportLead">Genera un resumen limpio para enviártelo por email o guardarlo.</p>
+          <textarea id="shareText" class="field share-text" rows="7" readonly></textarea>
+          <div class="actions">
+            <button class="ghost-btn small" id="copyShareBtn" data-i18n="c.copy">Copiar resumen</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="email-desk">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" data-i18n="e.eyebrow">Paso 3</p>
+          <h2 data-i18n="e.title">Mesa de email (solo email)</h2>
+          <p class="section-lead" data-i18n="e.lead">Sin teléfonos. Sin contratos automáticos. Genera un borrador claro para pedir oferta por escrito. Tú revisas y envías.</p>
+        </div>
+      </div>
+      <div class="card-grid two">
+        <div class="card">
+          <h3 data-i18n="e.compose">Borrador</h3>
+          <div class="form-grid">
+            <label class="field-wrap full">
+              <span class="field-label" data-i18n="e.to">Destinatario (email)</span>
+              <input id="mailTo" class="field" placeholder="atencioncliente@empresa.es">
+            </label>
+            <label class="field-wrap full">
+              <span class="field-label" data-i18n="e.subject">Asunto</span>
+              <input id="mailSubject" class="field">
+            </label>
+            <label class="field-wrap full">
+              <span class="field-label" data-i18n="e.body">Mensaje</span>
+              <textarea id="mailBody" class="field" rows="12"></textarea>
+            </label>
+          </div>
+          <div class="actions">
+            <a class="primary-btn" id="mailtoBtn" href="#" data-i18n="e.open">Abrir en tu cliente de correo</a>
+            <button class="secondary-btn" id="copyMailBtn" data-i18n="e.copy">Copiar borrador</button>
+          </div>
+          <p class="micro" data-i18n="e.warn">Regla de oro: no se envía nada automáticamente. El borrador incluye tu perfil solo si tú lo has rellenado.</p>
+        </div>
+        <div class="card">
+          <h3 data-i18n="e.principles">Principios del proyecto</h3>
+          <ul class="principles">
+            <li><span class="p-icon">✉️</span><div><b data-i18n="e.p1t">Email only</b><p data-i18n="e.p1">El modelo no tiene campo de teléfono. Las plantillas piden respuesta por escrito.</p></div></li>
+            <li><span class="p-icon">🧮</span><div><b data-i18n="e.p2t">Matemática visible</b><p data-i18n="e.p2">Cada recomendación muestra coste anual, impuestos y diferencia. Sin cajas negras.</p></div></li>
+            <li><span class="p-icon">🛡️</span><div><b data-i18n="e.p3t">Sin contratos automáticos</b><p data-i18n="e.p3">La herramienta informa; la decisión final y el envío del email los haces tú.</p></div></li>
+            <li><span class="p-icon">🌍</span><div><b data-i18n="e.p4t">Extensible por países</b><p data-i18n="e.p4">España viene precargada. Puedes añadir mercados con JSON y reglas de impuestos.</p></div></li>
+          </ul>
+          <div class="info-box" data-i18n="e.gdpr">Privacidad/GDPR: por defecto todo se calcula en local. Si publicas un fork, no recojas datos personales sin base legal clara.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container section" id="journey">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow" data-i18n="j.eyebrow">El mapa detrás de la herramienta</p>
+          <h2 data-i18n="j.title">De investigación real a herramienta pública</h2>
+          <p class="section-lead" data-i18n="j.lead">Este comparador nace de un mapa de código/investigación: facturas reales, reglas validadas y trampas detectadas. Aquí está la ruta para que cualquiera pueda auditarla y mejorarla.</p>
+        </div>
+      </div>
+      <div class="journey-grid">
+        <div class="journey-step"><div class="step-num">1</div><h4 data-i18n="j.s1t">Recoger precios</h4><p data-i18n="j.s1">Scrapers por compañía, fuente + fecha + evidencia. Nada de precios "mágicos".</p></div>
+        <div class="journey-step"><div class="step-num">2</div><h4 data-i18n="j.s2t">Normalizar datos</h4><p data-i18n="j.s2">Mismo esquema: energía P1/P2/P3, potencia, permanencia, SVA, reglas por consumo.</p></div>
+        <div class="journey-step"><div class="step-num">3</div><h4 data-i18n="j.s3t">Calcular coste real</h4><p data-i18n="j.s3">Fórmula con impuestos, alquiler contador y anualización. Resultado en €/año con IVA.</p></div>
+        <div class="journey-step"><div class="step-num">4</div><h4 data-i18n="j.s4t">Recomendar con reglas</h4><p data-i18n="j.s4">Ahorro mínimo, alertas indexadas, exclusión SVA, checklist de "baja y volver".</p></div>
+        <div class="journey-step"><div class="step-num">5</div><h4 data-i18n="j.s5t">Comunicar por email</h4><p data-i18n="j.s5">Borradores claros ES/EN. El humano revisa y envía. Sin teléfono, sin presión.</p></div>
+      </div>
+      <div class="card lessons-card">
+        <h3 data-i18n="j.lessons">Lecciones incorporadas al código</h3>
+        <div class="lessons-grid">
+          <div class="lesson"><b data-i18n="j.l1t">Dos precios en una misma web</b><p data-i18n="j.l1">Ej.: Naturgy puede mostrar conjuntos distintos. El modelo exige nombre de producto + fuente + fecha.</p></div>
+          <div class="lesson"><b data-i18n="j.l2t">Trampa por tramo de consumo</b><p data-i18n="j.l2">Ej.: TotalEnergies &lt;/&gt; 4000 kWh. Se modela con <code>tier_rule</code>, no con un precio plano.</p></div>
+          <div class="lesson"><b data-i18n="j.l3t">Indexada ≠ número único</b><p data-i18n="j.l3">El pool cambia. Se muestran escenarios bajo/medio/estrés en modo creativo.</p></div>
+          <div class="lesson"><b data-i18n="j.l4t">Bundles con servicios</b><p data-i18n="j.l4">SVA/seguros se marcan y se excluyen por defecto de la recomendación.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer container">
+    <div>
+      <div class="brand-name">LuzLibre</div>
+      <p class="micro" data-i18n="foot.desc">Proyecto open-source. Gratis, público y auditable. Hecho para ayudar a tomar decisiones informadas, no para presionar ventas.</p>
+    </div>
+    <div class="footer-links">
+      <a href="README.md" data-i18n="foot.readme">README</a>
+      <a href="data/tariffs.es.json" data-i18n="foot.data">Dataset ES</a>
+      <a href="LICENSE" data-i18n="foot.license">MIT License</a>
+    </div>
+  </footer>
+</body>
+</html>

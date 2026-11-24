@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ LuzLibre — Mapa de Código / Coding Map</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #f0f2f5; color: #1c1e21; line-height: 1.6; padding: 24px; }
+  .wrap { max-width: 1020px; margin: 0 auto; }
+  .card { background: #fff; border-radius: 12px; padding: 22px 26px; margin-bottom: 18px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  h1 { font-size: 24px; margin-bottom: 4px; }
+  h2 { font-size: 18px; margin: 18px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #e4e6eb; }
+  h3 { font-size: 14.5px; margin: 14px 0 8px; color: #1c2e4a; }
+  .sub { color: #65676b; font-size: 13px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.6px; margin: 10px 0; }
+  th { background: #1c2e4a; color: #fff; text-align: left; padding: 7px 9px; font-size: 11.5px; }
+  td { padding: 7px 9px; border-bottom: 1px solid #e4e6eb; vertical-align: top; }
+  tr:nth-child(even) td { background: #f7f8fa; }
+  code, pre { font-family: Consolas, "Courier New", monospace; }
+  pre { background: #14202e; color: #d8e6ff; padding: 14px 16px; border-radius: 8px; overflow-x: auto; font-size: 11.8px; line-height: 1.5; margin: 8px 0; }
+  pre .c { color: #7f9bb3; } pre .k { color: #7fd4ff; } pre .s { color: #a8e6a3; }
+  .pill { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 11px; font-weight: 700; }
+  .ok { background: #d4f4dd; color: #0b6b2e; }
+  .wait { background: #fff2d6; color: #8a5b00; }
+  .no { background: #fdd9d5; color: #a1281c; }
+  .info { background: #d8e6ff; color: #14459c; }
+  .rule { background: #fff8e6; border-left: 4px solid #f5a623; padding: 12px 16px; border-radius: 6px; font-size: 12.8px; margin: 10px 0; }
+  .two { display: flex; gap: 12px; flex-wrap: wrap; }
+  .two > div { flex: 1; min-width: 300px; background: #f7f8fa; border-radius: 8px; padding: 12px 14px; font-size: 12.8px; }
+  .flag { background: #eef4ff; border-left: 4px solid #4a86e8; padding: 10px 14px; border-radius: 6px; font-size: 12.5px; margin: 8px 0; }
+  .foot { text-align: center; color: #999; font-size: 11.5px; margin: 24px 0 8px; }
+  ul { margin: 6px 0 6px 20px; font-size: 13px; }
+  li { margin: 3px 0; }
+  .tree { background: #f4f6f9; border-radius: 8px; padding: 12px 16px; font-family: Consolas, monospace; font-size: 11.8px; white-space: pre; line-height: 1.55; overflow-x: auto; }
+  .badge { font-size: 10.5px; background: #eef; color: #336; border-radius: 4px; padding: 1px 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="card">
+  <h1>⚡ LuzLibre — Coding Map <span class="sub">/ Mapa de Código · Web App Blueprint</span></h1>
+  <div class="sub">Realistic architecture for turning our electricity-tariff research into working software · v1.0 · 24 Nov 2026</div>
+  <div class="rule" style="margin-top:12px">
+    <b>🇹🇷 Kısa özet:</b> 16 elektrik şirketinin web sitelerinden fiyatları otomatik toplayan, kullanıcıdan <b>CUPS + 3 aylık fatura</b> (görsel veya form) alan, yıllık maliyeti hesaplayıp <b>grafikli İspanyolca/İngilizce rapor</b> üreten ve şirketlere <b>SADECE e-posta</b> ile iletişim kuran bir web uygulaması. Telefon numarası YOK, sözleşme imzalatma YOK — sadece bilgi + karşılaştırma + "hangisi mantıklı" önerisi.
+  </div>
+</div>
+
+<!-- ===== 1. WHAT ===== -->
+<div class="card">
+  <h2>1 · What are we building? / ¿Qué construimos?</h2>
+  <div class="two">
+    <div><b>🇬🇧 EN:</b> A bilingual (ES/EN) web tool where a user enters their <b>CUPS</b>, a <b>3-month bill</b> (photo or simple form) and optionally annual kWh + P1/P2/P3 split. The app collects <b>live prices from all active Spanish electricity retailers</b>, computes the real annual cost for that exact profile, shows <b>HTML charts + plain explanations</b>, and recommends which tariff makes sense — contacting companies <b>by email only</b> (no phones anywhere).</div>
+    <div><b>🇪🇸 ES:</b> Herramienta web bilingüe (ES/EN) donde el usuario introduce su <b>CUPS</b>, una <b>factura de 3 meses</b> (foto o formulario simple) y opcionalmente consumo anual + reparto P1/P2/P3. La app recoge <b>precios en vivo de todas las comercializadoras españolas</b>, calcula el coste anual real para ese perfil, muestra <b>gráficos HTML + explicaciones claras</b>, y recomienda qué tarifa tiene sentido — contactando con las compañías <b>solo por email</b> (sin teléfonos).</div>
+  </div>
+  <div class="flag"><b>Golden rules baked into the product / Reglas de oro del producto:</b> ① Email only — the data model has <i>no phone field</i>. ② The app never signs contracts ("Contratar" buttons are never automated). ③ Every recommendation shows its math. ④ Indexed tariffs get scenario warnings. ⑤ SVA/insurance bundles are flagged and excluded by default.</div>
+</div>
+
+<!-- ===== 2. ARCHITECTURE ===== -->
+<div class="card">
+  <h2>2 · Architecture / Arquitectura</h2>
+  <svg viewBox="0 0 960 470" width="100%" style="max-width:960px">
+    <defs>
+      <marker id="arr" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 z" fill="#5b6b7f"/></marker>
+    </defs>
+    <!-- websites -->
+    <rect x="10" y="16" width="170" height="86" rx="9" fill="#e9edf3" stroke="#b9c4d2"/>
+    <text x="95" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1c2e4a">Company websites</text>
+    <text x="95" y="60" text-anchor="middle" font-size="10.5" fill="#556">16 retailers · static + JS pages</text>
+    <text x="95" y="76" text-anchor="middle" font-size="10.5" fill="#556">mipodo · naturgy · lucera · gana…</text>
+    <!-- OMIE -->
+    <rect x="10" y="118" width="170" height="64" rx="9" fill="#e3f1e6" stroke="#9dc6a8"/>
+    <text x="95" y="142" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0b6b2e">OMIE / ESIOS APIs</text>
+    <text x="95" y="160" text-anchor="middle" font-size="10.5" fill="#3d6">Official pool &amp; PVPC data (free)</text>
+    <!-- scrapers -->
+    <rect x="240" y="16" width="185" height="166" rx="9" fill="#fff" stroke="#4a86e8" stroke-width="1.6"/>
+    <text x="332" y="40" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14459c">① COLLECTORS</text>
+    <text x="332" y="58" text-anchor="middle" font-size="10.5" fill="#556">scrapers/ — 1 module per company</text>
+    <text x="332" y="76" text-anchor="middle" font-size="10.5" fill="#556">requests+BS4 (static)</text>
+    <text x="332" y="92" text-anchor="middle" font-size="10.5" fill="#556">Playwright (JS sites)</text>
+    <text x="332" y="108" text-anchor="middle" font-size="10.5" fill="#556">weekly cron · health-check</text>
+    <text x="332" y="128" text-anchor="middle" font-size="10.5" fill="#556">source URL + timestamp</text>
+    <text x="332" y="144" text-anchor="middle" font-size="10.5" fill="#556">+ screenshot of price table</text>
+    <text x="332" y="166" text-anchor="middle" font-size="10.5" font-weight="700" fill="#14459c">→ normalized JSON</text>
+    <!-- DB -->
+    <rect x="480" y="16" width="170" height="166" rx="9" fill="#fff" stroke="#4a86e8" stroke-width="1.6"/>
+    <text x="565" y="40" text-anchor="middle" font-size="12.5" font-weight="700" fill="#14459c">② PRICE DB</text>
+    <text x="565" y="60" text-anchor="middle" font-size="10.5" fill="#556">companies · tariffs · prices</text>
+    <text x="565" y="76" text-anchor="middle" font-size="10.5" fill="#556">price_history (versioned!)</text>
+    <text x="565" y="92" text-anchor="middle" font-size="10.5" fill="#556">SQLite (MVP) → PostgreSQL</text>
+    <text x="565" y="112" text-anchor="middle" font-size="10.5" fill="#556">every price keeps:</text>
+    <text x="565" y="128" text-anchor="middle" font-size="10.5" fill="#556">· sin/con impuestos</text>
+    <text x="565" y="144" text-anchor="middle" font-size="10.5" fill="#556">· permanencia · SVA flags</text>
+    <text x="565" y="162" text-anchor="middle" font-size="10.5" fill="#556">· vigencia · source</text>
+    <!-- user input -->
+    <rect x="10" y="212" width="170" height="120" rx="9" fill="#fdf3e2" stroke="#e0b36a"/>
+    <text x="95" y="238" text-anchor="middle" font-size="12.5" font-weight="700" fill="#8a5b00">User input</text>
+    <text x="95" y="256" text-anchor="middle" font-size="10.5" fill="#7a5b22">CUPS · potencia P1/P2</text>
+    <text x="95" y="272" text-anchor="middle" font-size="10.5" fill="#7a5b22">3-month bill (photo or form)</text>
+    <text x="95" y="288" text-anchor="middle" font-size="10.5" fill="#7a5b22">optional: annual kWh, P1/P2/P3</text>
+    <text x="95" y="306" text-anchor="middle" font-size="10.5" fill="#7a5b22">OCR helper (Tesseract es)</text>
+    <text x="95" y="322" text-anchor="middle" font-size="10.5" fill="#7a5b22">manual entry always works</text>
+    <!-- calculator -->
+    <rect x="240" y="212" width="185" height="120" rx="9" fill="#fff" stroke="#16a766" stroke-width="1.6"/>
+    <text x="332" y="238" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0b6b2e">③ CALCULATOR</text>
+    <text x="332" y="258" text-anchor="middle" font-size="10.5" fill="#556">engine/calculator.py</text>
+    <text x="332" y="274" text-anchor="middle" font-size="10.5" fill="#556">Σ kWh×price(P1/P2/P3)</text>
+    <text x="332" y="290" text-anchor="middle" font-size="10.5" fill="#556">+ kW×days×potencia</text>
+    <text x="332" y="306" text-anchor="middle" font-size="10.5" fill="#556">+ taxes (IEE 5,1127% + IVA 21%)</text>
+    <text x="332" y="322" text-anchor="middle" font-size="10.5" fill="#556">+ contador · bono social line</text>
+    <!-- recommender -->
+    <rect x="480" y="212" width="170" height="120" rx="9" fill="#fff" stroke="#16a766" stroke-width="1.6"/>
+    <text x="565" y="238" text-anchor="middle" font-size="12.5" font-weight="700" fill="#0b6b2e">④ RECOMMENDER</text>
+    <text x="565" y="258" text-anchor="middle" font-size="10.5" fill="#556">rank by annual € (con imp.)</text>
+    <text x="565" y="274" text-anchor="middle" font-size="10.5" fill="#556">switch rule: &gt;100 €/y saved</text>
+    <text x="565" y="290" text-anchor="middle" font-size="10.5" fill="#556">flags: SVA · promo end · pool risk</text>
+    <text x="565" y="306" text-anchor="middle" font-size="10.5" fill="#556">"baja y volver" check first</text>
+    <text x="565" y="322" text-anchor="middle" font-size="10.5" fill="#556">plain-language verdict (ES/EN)</text>
+    <!-- output -->
+    <rect x="710" y="16" width="240" height="166" rx="9" fill="#f3e9ff" stroke="#a479e2"/>
+    <text x="830" y="42" text-anchor="middle" font-size="12.5" font-weight="700" fill="#5b2ea6">⑤ REPORTS (ES/EN)</text>
+    <text x="830" y="62" text-anchor="middle" font-size="10.5" fill="#6b5">FastAPI + Jinja2 + Chart.js</text>
+    <text x="830" y="80" text-anchor="middle" font-size="10.5" fill="#6b5">bar: ranking anual €</text>
+    <text x="830" y="96" text-anchor="middle" font-size="10.5" fill="#6b5">doughnut: P1/P2/P3 split</text>
+    <text x="830" y="112" text-anchor="middle" font-size="10.5" fill="#6b5">line: price history per company</text>
+    <text x="830" y="128" text-anchor="middle" font-size="10.5" fill="#6b5">HTML export + self-email</text>
+    <text x="830" y="148" text-anchor="middle" font-size="10.5" fill="#6b5">i18n: es.json / en.json</text>
+    <!-- mailer -->
+    <rect x="710" y="212" width="240" height="120" rx="9" fill="#fff" stroke="#e0402e" stroke-width="1.6"/>
+    <text x="830" y="238" text-anchor="middle" font-size="12.5" font-weight="700" fill="#a1281c">⑥ MAILER (email only!)</text>
+    <text x="830" y="258" text-anchor="middle" font-size="10.5" fill="#556">Gmail API / SMTP</text>
+    <text x="830" y="274" text-anchor="middle" font-size="10.5" fill="#556">ES/EN templates: written-offer</text>
+    <text x="830" y="290" text-anchor="middle" font-size="10.5" fill="#556">requests per company (CUPS + profile)</text>
+    <text x="830" y="306" text-anchor="middle" font-size="10.5" fill="#556">NO phone numbers stored/ shown</text>
+    <text x="830" y="322" text-anchor="middle" font-size="10.5" fill="#556">draft → human approves → send</text>
+    <!-- arrows -->
+    <line x1="180" y1="58" x2="238" y2="58" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="180" y1="150" x2="238" y2="110" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="425" y1="99" x2="478" y2="99" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="565" y1="182" x2="565" y2="210" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="650" y1="99" x2="708" y2="80" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="650" y1="272" x2="708" y2="272" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="180" y1="272" x2="238" y2="272" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="425" y1="272" x2="478" y2="272" stroke="#5b6b7f" stroke-width="1.6" marker-end="url(#arr)"/>
+    <line x1="332" y1="332" x2="332" y2="360" stroke="#999" stroke-width="1.2" stroke-dasharray="4"/>
+    <line x1="332" y1="360" x2="830" y2="360" stroke="#999" stroke-width="1.2" stroke-dasharray="4"/>
+    <line x1="830" y1="360" x2="830" y2="334" stroke="#999" stroke-width="1.2" stroke-dasharray="4" marker-end="url(#arr)"/>
+    <text x="580" y="378" text-anchor="middle" font-size="10.5" fill="#888">user profile feeds reports + mailer (CUPS, consumption)</text>
+    <!-- scheduler -->
+    <rect x="240" y="392" width="480" height="58" rx="9" fill="#eef4ff" stroke="#4a86e8"/>
+    <text x="480" y="416" text-anchor="middle" font-size="12" font-weight="700" fill="#14459c">⑦ SCHEDULER — cron: weekly scrape + pool sync + price-change alerts</text>
+    <text x="480" y="436" text-anchor="middle" font-size="10.5" fill="#556">alert rule: any tracked tariff moves &gt;3% → email the user / re-run comparison</text>
+    <line x1="480" y1="392" x2="480" y2="336" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#arr)"/>
+    <line x1="332" y1="392" x2="332" y2="336" stroke="#5b6b7f" stroke-width="1.4" marker-end="url(#arr)"/>
+  </svg>
+</div>
+
+<!-- ===== 3. STACK ===== -->
+<div class="card">
+  <h2>3 · Tech stack (realistic) / Stack tecnológico (realista)</h2>
+  <table>
+    <tr><th>Layer</th><th>Choice</th><th>Why / Por qué</th></tr>
+    <tr><td>Backend</td><td><b>Python 3.12 + FastAPI</b></td><td>Best scraping ecosystem; async; auto docs at /docs</td></tr>
+    <tr><td>Scraping (static)</td><td><b>requests + BeautifulSoup</b></td><td>Cheap, fast, enough for most tariff pages</td></tr>
+    <tr><td>Scraping (JS-heavy)</td><td><b>Playwright (headless)</b></td><td>Naturgy checkout-style widgets, Webflow sites (Podo), cookie banners</td></tr>
+    <tr><td>DB</td><td><b>SQLite (MVP) → PostgreSQL</b></td><td>Zero-setup start; versioned price_history table from day one</td></tr>
+    <tr><td>Pool data</td><td><b>OMIE daily CSVs + ESIOS (Red Eléctrica) API</b></td><td>Official, free — powers indexed-tariff scenarios</td></tr>
+    <tr><td>Bill input</td><td>Form first; <b>Tesseract OCR (spa)</b> as helper</td><td>OCR of Spanish bills is ~80% reliable → manual fallback mandatory</td></tr>
+    <tr><td>Frontend</td><td><b>Jinja2 + Chart.js + vanilla CSS</b> (no heavy SPA)</td><td>Server-rendered = simple deploy; charts are the only JS</td></tr>
+    <tr><td>i18n</td><td><b>es.json / en.json</b> dictionaries</td><td>Bilingual ES/EN as required; language toggle in header</td></tr>
+    <tr><td>Mail</td><td><b>Gmail API (OAuth)</b> or SMTP</td><td>Draft-first: human approves every send</td></tr>
+    <tr><td>Deploy</td><td>Docker on a small VPS + cron</td><td>~5 €/month; runs weekly scrapes</td></tr>
+    <tr><td>Tests</td><td>pytest + saved HTML fixtures per company</td><td>Scrapers WILL break when sites change — fixtures catch it</td></tr>
+  </table>
+</div>
+
+<!-- ===== 4. INPUT ===== -->
+<div class="card">
+  <h2>4 · User input flow / Flujo de datos del usuario</h2>
+  <table>
+    <tr><th>Field</th><th>Required?</th><th>How / Cómo</th><th>Used for</th></tr>
+    <tr><td>CUPS</td><td><span class="pill ok">Yes</span></td><td>Text input with ES00… validation regex</td><td>Company quote requests; future auto-consumption lookup</td></tr>
+    <tr><td>3-month bill</td><td><span class="pill ok">Yes</span></td><td><b>Option A:</b> photo upload → OCR prefills · <b>Option B:</b> 3 numbers in a form (importe €, kWh, periodo)</td><td>Annualization + reality anchor</td></tr>
+    <tr><td>Potencia P1/P2</td><td><span class="pill ok">Yes</span></td><td>From bill (kW) or CUPS lookup</td><td>Fixed cost term</td></tr>
+    <tr><td>Annual kWh + P1/P2/P3</td><td><span class="pill wait">Optional</span></td><td>If user has 12 invoices or a DH bill</td><td>Exact per-period weighting</td></tr>
+    <tr><td>Current tariff &amp; price</td><td><span class="pill wait">Optional</span></td><td>From bill header</td><td>"vs. what you pay now" comparison</td></tr>
+    <tr><td>Bono Social</td><td><span class="pill wait">Optional</span></td><td>Checkbox</td><td>Filters out offers that require "sin bono social"</td></tr>
+  </table>
+  <div class="flag"><b>Annualization rule / Regla de anualización:</b> 3-month bill × 4 is naive. Better: weight by season (winter Q1/Q4 heavier for DH homes) using OMIE demand profiles, and always show a confidence band ("~1.180 – 1.320 €/y"). If the user supplies annual kWh, prefer it. If a DH bill gives P1/P2/P3, use it; else apply 2.0TD reference split (≈ 24% / 24% / 52%).</div>
+</div>
+
+<!-- ===== 5. CALCULATOR ===== -->
+<div class="card">
+  <h2>5 · Calculator engine / Motor de cálculo</h2>
+  <pre><span class="c"># engine/calculator.py — core formula (all prices "sin impuestos")</span>
+<span class="k">from</span> dataclasses <span class="k">import</span> dataclass
+
+VAT, IEE = <span class="s">0.21</span>, <span class="s">0.0511269632</span>          <span class="c"># configurable! (RDL changes tax rules)</span>
+TAX_FACTOR = (<span class="s">1</span> + IEE) * (<span class="s">1</span> + VAT)      <span class="c"># ≈ 1.27186 today</span>
+
+<span class="k">def</span> annual_cost(tariff, profile, days=<span class="s">365</span>):
+    energy = sum(
+        profile.kwh[p] * tariff.energy[p]      <span class="c"># p in {P1, P2, P3}</span>
+        <span class="k">for</span> p <span class="k">in</span> (<span class="s">"P1"</span>, <span class="s">"P2"</span>, <span class="s">"P3"</span>)
+    )
+    power = sum(
+        profile.kw[p] * days * tariff.power[p]  <span class="c"># €/kW·día × kW × days</span>
+        <span class="k">for</span> p <span class="k">in</span> (<span class="s">"P1"</span>, <span class="s">"P2"</span>)
+    )
+    regulated = tariff.contador + tariff.bono_social_line   <span class="c"># small fixed lines</span>
+    <span class="k">return</span> round((energy + power + regulated) * TAX_FACTOR, <span class="s">2</span>)
+
+<span class="c"># engine/omie.py — indexed tariffs</span>
+<span class="k">def</span> indexed_scenarios(profile):
+    <span class="c"># pool €/MWh: avg_30d · avg_12m · stress(+30%)  → €/y ranges</span>
+    <span class="k">return</span> {<span class="s">"low"</span>: .., <span class="s">"avg"</span>: .., <span class="s">"stress"</span>: ..}</pre>
+  <ul>
+    <li><b>Every output is "con impuestos"</b> — the number users recognize from real invoices.</li>
+    <li>Indexed tariffs never show a single number — always a <b>range + scenario chart</b> (low/avg/stress).</li>
+    <li>Quarterly-revised tariffs (e.g. Podo Flexi Tres) get the same scenario view with a "rev. date" badge.</li>
+  </ul>
+</div>
+
+<!-- ===== 6. RECOMMENDER ===== -->
+<div class="card">
+  <h2>6 · Recommendation logic ("¿Cuál tiene sentido?")</h2>
+  <pre><span class="c"># engine/recommender.py — the rules we validated in the field</span>
+RULES = {
+  <span class="s">"min_savings"</span>: <span class="s">100</span>,            <span class="c"># €/year to justify switching</span>
+  <span class="s">"pool_indexed_max"</span>: <span class="s">80</span>,      <span class="c"># €/MWh: above this, never recommend indexed</span>
+  <span class="s">"exclude_sva"</span>: <span class="k">True</span>,          <span class="c"># flag Servigas/seguro/maintenance bundles</span>
+  <span class="s">"promo_expiry_warn_days"</span>: <span class="s">30</span>,<span class="c"># warn when offer vigencia ends</span>
+}
+
+<span class="k">def</span> recommend(results, current):
+    keep_current = <span class="k">True</span>
+    <span class="k">for</span> r <span class="k">in</span> sorted(results, key=<span class="k">lambda</span> x: x.total):
+        <span class="k">if</span> r.sva_bundle:        r.verdict = <span class="s">"EXCLUDED — service bundle"</span>
+        <span class="k">elif</span> r.indexed <span class="k">and</span> pool_30d &gt; RULES[<span class="s">"pool_indexed_max"</span>]:
+            r.verdict = <span class="s">"RISK — pool too high right now"</span>
+        <span class="k">elif</span> current.total - r.total &gt; RULES[<span class="s">"min_savings"</span>]:
+            r.verdict = <span class="s">"SWITCH CANDIDATE"</span>; keep_current = <span class="k">False</span>
+    <span class="k">if</span> keep_current:
+        suggest <span class="s">"baja y volver"</span> check with current retailer <span class="k">first</span></pre>
+  <div class="rule"><b>Plus / Además:</b> a "before you switch" checklist is always printed: ① get the offer in writing ② ask your current retailer to match (retención) ③ never cancel before the new contract is confirmed — in Spain the switch is seamless ④ 14-day withdrawal right always exists.</div>
+</div>
+
+<!-- ===== 7. SCRAPERS ===== -->
+<div class="card">
+  <h2>7 · Scraper map — 16 companies / Mapa de extracción</h2>
+  <table>
+    <tr><th>#</th><th>Company</th><th>Source</th><th>Method</th><th>Difficulty</th><th>Notes</th></tr>
+    <tr><td>1</td><td>Visalia</td><td>grupovisalia.com</td><td>BS4</td><td><span class="pill ok">Easy</span></td><td>New-customer price = "baja y volver" input</td></tr>
+    <tr><td>2</td><td>Lucera</td><td>lucera.es</td><td>BS4</td><td><span class="pill ok">Easy</span></td><td>Fijo + Amigo plan</td></tr>
+    <tr><td>3</td><td>Gana</td><td>ganaenergia.com</td><td>BS4</td><td><span class="pill wait">Medium</span></td><td>PDF datasheets → pdfplumber</td></tr>
+    <tr><td>4</td><td>Podo</td><td>mipodo.com/tarifas-luz</td><td>BS4 (Webflow)</td><td><span class="pill wait">Medium</span></td><td>3 tariffs incl. quarterly revision</td></tr>
+    <tr><td>5</td><td>Naturgy</td><td>naturgy.es/hogar/luz/…</td><td>Playwright</td><td><span class="pill no">Hard</span></td><td>Two price sets on one page — must label each; checkout = human-only</td></tr>
+    <tr><td>6</td><td>TotalEnergies</td><td>totalenergies.es</td><td>Playwright</td><td><span class="pill no">Hard</span></td><td>Consumption tiers (&lt;/&gt;4.000 kWh) must be modelled</td></tr>
+    <tr><td>7</td><td>Holaluz</td><td>holaluz.com</td><td>BS4</td><td><span class="pill ok">Easy</span></td><td>—</td></tr>
+    <tr><td>8</td><td>Octopus</td><td>octopusenergy.es</td><td>BS4</td><td><span class="pill ok">Easy</span></td><td>Octopus 3 (12m fixed + DH)</td></tr>
+    <tr><td>9</td><td>Endesa</td><td>endesaonline.com</td><td>Playwright</td><td><span class="pill wait">Medium</span></td><td>—</td></tr>
+    <tr><td>10</td><td>Iberdrola</td><td>iberdrola.es</td><td>Playwright</td><td><span class="pill wait">Medium</span></td><td>—</td></tr>
+    <tr><td>11</td><td>Plenitude</td><td>eniplenitude.es</td><td>BS4</td><td><span class="pill wait">Medium</span></td><td>—</td></tr>
+    <tr><td>12</td><td>Repsol</td><td>repsol.es</td><td>Playwright</td><td><span class="pill no">Hard</span></td><td>FACILITA bundle → flag SVA</td></tr>
+    <tr><td>13</td><td>Factor</td><td>factorenergia.com</td><td>BS4</td><td><span class="pill no">Hard</span></td><td>Two potencia tables — store BOTH, warn user</td></tr>
+    <tr><td>14</td><td>CHC</td><td>chcenergia.es</td><td>BS4</td><td><span class="pill wait">Medium</span></td><td>Promo-12-month price + post-promo price</td></tr>
+    <tr><td>15</td><td>Som</td><td>somenergia.coop</td><td>BS4</td><td><span class="pill ok">Easy</span></td><td>Cooperative model flags</td></tr>
+    <tr><td>16</td><td>Goiener</td><td>goiener.com</td><td>BS4</td><td><span class="pill ok">Easy</span></td><td>100 € socio fee → cost model flag</td></tr>
+    <tr><td>—</td><td>OMIE/ESIOS</td><td>omie.es · esios.ree.es</td><td>official CSV/API</td><td><span class="pill ok">Easy</span></td><td>Pool prices for indexed scenarios</td></tr>
+  </table>
+  <div class="rule"><b>Scraper discipline / Disciplina:</b> ① 1 request/2s per domain, cached weekly. ② Save a screenshot + raw HTML snapshot of every extracted price (evidence). ③ Health check = parse-test against saved fixtures; on failure, alert + mark company "manual review". 4) Prices are always shown with <i>source URL + extraction date</i> in the UI. Legal note: informational extraction from public pages, respectful rate limits, no login-walls, no contract automation.</div>
+</div>
+
+<!-- ===== 8. DATA MODEL ===== -->
+<div class="card">
+  <h2>8 · Data model / Modelo de datos</h2>
+  <div class="tree">companies(id, name, email_contact, web_form_url, [NO PHONE FIELD], notes)
+tariffs(id, company_id, name, type[fijo|dh3|indexada|trimestral],
+        energy_p1, energy_p2, energy_p3, power_p1, power_p2,        -- sin impuestos
+        tax_factor, permanencia, sva_bundle, promo_until, tier_rule,  -- e.g. &lt;/&gt;4000 kWh
+        source_url, extracted_at, evidence_html)
+price_history(id, tariff_id, snapshot_at, payload_json)              -- append-only!
+user_profiles(id, cups, kw_p1, kw_p2, kwh_p1, kwh_p2, kwh_p3,
+              annual_kwh, current_tariff_id, bono_social, locale[es|en])
+bills(id, profile_id, period_start, period_end, amount_eur, kwh, image_path, ocr_json)
+comparisons(id, profile_id, run_at, results_json, verdict_text_es, verdict_text_en)
+mail_threads(id, company_id, subject, sent_at, status[reply|pending], message_id)</div>
+  <ul>
+    <li><b>price_history is append-only</b> — the moment a company changes a price, we can prove it (this is how we caught Naturgy's two price sets and TE's 4.000 kWh trap).</li>
+    <li><b>tier_rule</b> column exists because of TE: prices conditional on consumption must be modelled, not flattened.</li>
+  </ul>
+</div>
+
+<!-- ===== 9. UI ===== -->
+<div class="card">
+  <h2>9 · UI — bilingual HTML with charts / Interfaz bilingüe</h2>
+  <div class="two">
+    <div>
+      <h3>Page flow / Flujo de páginas</h3>
+      <ul>
+        <li><b>1. Home</b> — language toggle ES/EN · "Compara tu factura / Compare your bill"</li>
+        <li><b>2. Profile form</b> — CUPS + bill upload/form + potencia (OCR prefills)</li>
+        <li><b>3. Results</b> — Chart.js bar (ranking €/y) · doughnut (P1/P2/P3) · scenario line for indexed</li>
+        <li><b>4. Detail card</b> per tariff: math shown line by line, flags, source link</li>
+        <li><b>5. Verdict panel</b> — plain language + "before you switch" checklist</li>
+        <li><b>6. Email desk</b> — pick companies → pre-filled ES/EN inquiry → review → send</li>
+        <li><b>7. Export</b> — self-contained HTML report (like our özet files) + email to self</li>
+      </ul>
+    </div>
+    <div>
+      <h3>i18n example / Ejemplo de i18n</h3>
+      <pre style="margin:0"><span class="c">// i18n/es.json</span>
+{<span class="s">"verdict.keep"</span>: <span class="s">"Quédate con {name}: ahorras {n} €/año menos que cambiando."</span>,
+ <span class="s">"flag.sva"</span>:    <span class="s">"⚠ Incluye servicios adicionales — no recomendado."</span>,
+ <span class="s">"flag.pool"</span>:   <span class="s">"⚠ Precio indexado: el pool está alto ({v} €/MWh)."</span>}
+
+<span class="c">// i18n/en.json</span>
+{<span class="s">"verdict.keep"</span>: <span class="s">"Stay with {name}: switching would save only {n} €/year."</span>,
+ <span class="s">"flag.sva"</span>:    <span class="s">"⚠ Bundled extra services — not recommended."</span>,
+ <span class="s">"flag.pool"</span>:   <span class="s">"⚠ Indexed tariff: the pool is high ({v} €/MWh)."</span>}</pre>
+    </div>
+  </div>
+</div>
+
+<!-- ===== 10. FOLDER ===== -->
+<div class="card">
+  <h2>10 · Project layout / Estructura del proyecto</h2>
+  <div class="tree">luzlibre/
+├── app/
+│   ├── main.py                <span class="c"># FastAPI routes: /profile /results /mail /export</span>
+│   ├── config.py              <span class="c"># tax factors, thresholds, locales</span>
+│   ├── models.py              <span class="c"># SQLAlchemy (schema above)</span>
+│   ├── scrapers/
+│   │   ├── base.py            <span class="c"># ScraperBase: fetch → parse → normalize → snapshot</span>
+│   │   ├── visalia.py  lucera.py  podo.py  naturgy.py …  (16 modules)
+│   │   └── fixtures/          <span class="c"># saved HTML per company for regression tests</span>
+│   ├── engine/
+│   │   ├── calculator.py      <span class="c"># annual_cost(), taxes</span>
+│   │   ├── recommender.py     <span class="c"># rules + verdict texts (ES/EN)</span>
+│   │   ├── omie.py            <span class="c"># pool scenarios</span>
+│   │   └── annualize.py       <span class="c"># 3-month bill → yearly (seasonal weights)</span>
+│   ├── mailer/
+│   │   ├── templates/es/ … en/  <span class="c"># inquiry, follow-up, TE-style written request</span>
+│   │   └── gmail_client.py    <span class="c"># draft-first, human approval</span>
+│   ├── web/
+│   │   ├── templates/         <span class="c"># Jinja2: base_es.html base_en.html results.html …</span>
+│   │   └── static/            <span class="c"># chart.js, css</span>
+│   └── i18n/ (es.json, en.json)
+├── data/ (app.db, evidence/, bills/)
+├── tests/ (test_calculator.py, test_scrapers.py …)
+├── Dockerfile  docker-compose.yml
+└── README.md</div>
+</div>
+
+<!-- ===== 11. PHASES ===== -->
+<div class="card">
+  <h2>11 · Realistic build plan / Plan realista</h2>
+  <table>
+    <tr><th>Phase</th><th>Scope</th><th>Effort</th><th>Result</th></tr>
+    <tr><td><b>P0 — MVP</b></td><td>Calculator + recommender + manual form + 3 scrapers (Podo, Lucera, Naturgy) + HTML report ES/EN with 1 chart</td><td>~1 week</td><td>Our own research, automated</td></tr>
+    <tr><td><b>P1</b></td><td>All 16 scrapers + price_history + evidence snapshots + full charts</td><td>+2 weeks</td><td>Live market map</td></tr>
+    <tr><td><b>P2</b></td><td>Bill OCR helper + mailer desk (draft-first) + OMIE scenarios + alerts</td><td>+2 weeks</td><td>Full workflow incl. email campaigns</td></tr>
+    <tr><td><b>P3</b></td><td>Docker deploy + weekly cron + fixture-test CI</td><td>+1 week</td><td>Runs unattended, mails alerts</td></tr>
+  </table>
+  <div class="flag"><b>What the app will NEVER do / Lo que NUNCA hará:</b> sign contracts · store IBAN/card data · show phone numbers · auto-send email without human approval · recommend a bundle with SVA/insurance silently. It is a decision-support tool — the human (you) always presses the final button.</div>
+</div>
+
+<div class="card">
+  <h2>12 · How today's research maps onto the code</h2>
+  <table>
+    <tr><th>Research lesson (Nov 2026)</th><th>Encoded as</th></tr>
+    <tr><td>Naturgy page shows two price sets (Noche vs Solar)</td><td><code>tariffs.name</code> + per-product source URL; scraper warns on duplicate-looking prices</td></tr>
+    <tr><td>TE: 0,1199 €/kWh only ≤4.000 kWh; ours 0,189</td><td><code>tier_rule</code> column + calculator branching on annual kWh</td></tr>
+    <tr><td>Podo Mercado looked cheap only at pool ≈56 €/MWh</td><td>indexed scenario engine (low/avg/stress) — never a single number</td></tr>
+    <tr><td>Factor: two potencia tables (130 vs 425 €/y)</td><td>evidence snapshots + "manual review" flag when values conflict</td></tr>
+    <tr><td>Phone-sales traps (Podo opinions, FACILITA)</td><td>no-phone UI + SVA flags + email-only templates</td></tr>
+    <tr><td>"Baja y volver" beats switching</td><td>recommender always prints the retención/baja-y-volver step first</td></tr>
+    <tr><td>Everything must be written</td><td>mailer drafts; every price shows source + date</td></tr>
+  </table>
+</div>
+
+<div class="foot">⚡ LuzLibre blueprint · v1.0 · built from 12 real invoices, 44 e-mails and 16 companies' live pages · ES/EN product · Arena Agent</div>
+
+</div>
+</body>
+</html>

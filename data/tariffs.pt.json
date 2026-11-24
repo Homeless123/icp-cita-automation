@@ -1,0 +1,29 @@
+{
+  "meta": {
+    "country": "PT",
+    "currency": "EUR",
+    "updated_at": "2026-11-24",
+    "disclaimer": {
+      "es": "Plantilla de ejemplo para Portugal. Añade tarifas reales con fuente y fecha antes de usar en producción.",
+      "en": "Example template for Portugal. Add real tariffs with source and date before production use."
+    }
+  },
+  "tariffs": [
+    {
+      "id": "pt-example-simples",
+      "company": "Exemplo",
+      "name": "Tarifa Simples (exemplo)",
+      "type": "fijo",
+      "energy": { "P1": 0.160, "P2": 0.160, "P3": 0.160 },
+      "power": { "P1": 0.0 },
+      "permanencia_meses": 0,
+      "sva_bundle": false,
+      "promo_until": null,
+      "tier_rule": null,
+      "source_url": "https://simulador.precos.erse.pt/",
+      "extracted_at": "2026-11-24",
+      "notes": "Placeholder. Substituir por oferta real verificada.",
+      "email_contact": ""
+    }
+  ]
+}

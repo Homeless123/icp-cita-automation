@@ -1,0 +1,76 @@
+{
+  "countries": [
+    {
+      "code": "ES",
+      "name": { "es": "España", "en": "Spain" },
+      "currency": "EUR",
+      "locale": "es-ES",
+      "vat": 0.21,
+      "electricity_tax": 0.0511269632,
+      "meter_daily_eur": 0.02663,
+      "periods": ["P1", "P2", "P3"],
+      "power_periods": ["P1", "P2"],
+      "default_power_kw": { "P1": 3.45, "P2": 3.45 },
+      "default_split": { "P1": 0.24, "P2": 0.24, "P3": 0.52 },
+      "notes": {
+        "es": "Modelo 2.0TD (península). Impuestos configurables: IVA 21% + IEE 5,11269632%. Verifica siempre en tu factura.",
+        "en": "2.0TD model (mainland). Configurable taxes: VAT 21% + electricity tax 5.11269632%. Always verify on your bill."
+      },
+      "regulator": { "name": "CNMC", "url": "https://comparador.cnmc.gob.es/" }
+    },
+    {
+      "code": "PT",
+      "name": { "es": "Portugal", "en": "Portugal" },
+      "currency": "EUR",
+      "locale": "pt-PT",
+      "vat": 0.23,
+      "electricity_tax": 0.001,
+      "meter_daily_eur": 0.0,
+      "periods": ["P1", "P2", "P3"],
+      "power_periods": ["P1"],
+      "default_power_kw": { "P1": 3.45 },
+      "default_split": { "P1": 0.33, "P2": 0.33, "P3": 0.34 },
+      "notes": {
+        "es": "Plantilla extensible. Añade tarifas en data/tariffs.pt.json y ajusta impuestos/reglas locales.",
+        "en": "Extensible template. Add tariffs in data/tariffs.pt.json and adjust local taxes/rules."
+      },
+      "regulator": { "name": "ERSE", "url": "https://simulador.precos.erse.pt/" }
+    },
+    {
+      "code": "DE",
+      "name": { "es": "Alemania", "en": "Germany" },
+      "currency": "EUR",
+      "locale": "de-DE",
+      "vat": 0.19,
+      "electricity_tax": 0.0,
+      "meter_daily_eur": 0.0,
+      "periods": ["P1"],
+      "power_periods": [],
+      "default_power_kw": {},
+      "default_split": { "P1": 1.0 },
+      "notes": {
+        "es": "Plantilla extensible. Modelo simplificado (precio único + base mensual). Contribuye tarifas locales.",
+        "en": "Extensible template. Simplified model (single price + monthly base). Contribute local tariffs."
+      },
+      "regulator": { "name": "Bundesnetzagentur", "url": "https://www.bundesnetzagentur.de/" }
+    },
+    {
+      "code": "OTHER",
+      "name": { "es": "Otro país (personalizado)", "en": "Other country (custom)" },
+      "currency": "EUR",
+      "locale": "en-GB",
+      "vat": 0.0,
+      "electricity_tax": 0.0,
+      "meter_daily_eur": 0.0,
+      "periods": ["P1"],
+      "power_periods": [],
+      "default_power_kw": {},
+      "default_split": { "P1": 1.0 },
+      "notes": {
+        "es": "Modo creativo: define tus propios impuestos, periodos y tarifas. Ideal para adaptar el comparador a cualquier mercado.",
+        "en": "Creative mode: define your own taxes, periods and tariffs. Ideal for adapting the comparator to any market."
+      },
+      "regulator": { "name": "", "url": "" }
+    }
+  ]
+}
